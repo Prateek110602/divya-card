@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Good Morning Cutuuuu ☀️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{font-family:'Lora',Georgia,serif;color:#FFF8F0;background:#3D2B1F}
+
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════ */
+:root{
+  --db:#5C4033;
+  --mb:#8B6F47;
+  --lb:#B8956A;
+  --car:#D4AF7A;
+  --gold:#E8C547;
+  --rose:#E8A0A0;
+  --cream:#FFF8F0;
+  --text-dark:#3D2B1F;
+  --text-mid:#7A5C3C;
+}
+
+/* ═══════════════════════════════════════
+   SCREENS
+═══════════════════════════════════════ */
+.screen{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.8s ease;
+  overflow:hidden;
+}
+.screen.active{opacity:1;pointer-events:all}
+
+#s1{background:radial-gradient(ellipse at 30% 20%,#7A5C3C 0%,#5C4033 40%,#3D2B1F 100%);z-index:10}
+#s2{background:radial-gradient(ellipse at 60% 30%,#6B4E37 0%,#4A3020 100%);z-index:9}
+#s3{
+  background:linear-gradient(160deg,#F5E6CF 0%,#EDD5B3 60%,#E0C59A 100%);
+  overflow-y:auto !important;overflow-x:hidden;
+  justify-content:flex-start !important;
+  padding:4.5rem 1rem 6rem;
+  -webkit-overflow-scrolling:touch;z-index:8;
+}
+#s4{background:radial-gradient(ellipse at 40% 60%,#7A5C3C 0%,#5C4033 50%,#3D2B1F 100%);z-index:7}
+#s5{background:linear-gradient(160deg,#6B4E37 0%,#4A3020 100%);z-index:6}
+#s6{background:radial-gradient(ellipse at 50% 50%,#A0825C 0%,#7A5C3C 50%,#5C4033 100%);z-index:5}
+#s7{
+  background:radial-gradient(ellipse at 30% 20%,#7A5C3C 0%,#5C4033 40%,#3D2B1F 100%);
+  overflow-y:auto !important;overflow-x:hidden;
+  justify-content:flex-start !important;
+  padding:4.5rem 1rem 6rem;
+  -webkit-overflow-scrolling:touch;z-index:4;
+}
+
+/* ═══════════════════════════════════════
+   NAV DOTS
+═══════════════════════════════════════ */
+#nav-dots{
+  position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);
+  display:flex;gap:0.55rem;z-index:2000;pointer-events:all;
+}
+.dot{
+  width:7px;height:7px;border-radius:50%;
+  background:rgba(255,248,240,0.3);
+  border:1px solid rgba(255,248,240,0.45);
+  cursor:pointer;transition:all 0.3s ease;
+}
+.dot.active{background:var(--car);border-color:var(--car);transform:scale(1.4)}
+
+/* ═══════════════════════════════════════
+   BACK BUTTON
+═══════════════════════════════════════ */
+#back-btn{
+  position:fixed;top:1rem;left:1rem;
+  background:rgba(255,248,240,0.12);
+  border:1px solid rgba(255,248,240,0.25);
+  color:var(--cream);border-radius:50%;
+  width:38px;height:38px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1.1rem;z-index:2000;
+  transition:all 0.2s;backdrop-filter:blur(8px);
+}
+#back-btn:hover{background:rgba(255,248,240,0.22)}
+#back-btn.hidden{opacity:0;pointer-events:none}
+
+/* ═══════════════════════════════════════
+   EGG BADGE
+═══════════════════════════════════════ */
+#egg-badge{
+  position:fixed;top:1rem;right:1rem;
+  background:rgba(232,197,71,0.15);
+  border:1px solid rgba(232,197,71,0.4);
+  color:var(--gold);border-radius:20px;
+  padding:0.3rem 0.7rem;font-size:0.75rem;
+  font-family:'Dancing Script',cursive;
+  cursor:pointer;z-index:2000;
+  transition:all 0.3s;backdrop-filter:blur(8px);
+  -webkit-user-select:none;user-select:none;
+}
+#egg-badge:hover{background:rgba(232,197,71,0.25);transform:scale(1.06)}
+
+/* ═══════════════════════════════════════
+   HINT BUTTON (unlocks at 3 eggs)
+═══════════════════════════════════════ */
+#hint-btn{
+  position:fixed;bottom:3.2rem;left:1rem;
+  background:rgba(232,197,71,0.12);
+  border:1px solid rgba(232,197,71,0.35);
+  color:var(--gold);border-radius:12px;
+  padding:0.35rem 0.7rem;font-size:0.75rem;
+  cursor:pointer;z-index:2000;
+  font-family:'Dancing Script',cursive;
+  backdrop-filter:blur(8px);
+  opacity:0;pointer-events:none;
+  transition:all 0.4s ease;
+}
+#hint-btn.visible{opacity:1;pointer-events:all}
+#hint-btn:hover{background:rgba(232,197,71,0.22)}
+
+/* ═══════════════════════════════════════
+   PSST BUTTON
+═══════════════════════════════════════ */
+#psst-btn{
+  position:fixed;bottom:3.2rem;right:1rem;
+  font-size:0.72rem;color:rgba(255,248,240,0.35);
+  cursor:pointer;font-family:'Dancing Script',cursive;
+  z-index:2000;transition:color 0.3s;
+  -webkit-user-select:none;user-select:none;
+}
+#psst-btn:hover{color:rgba(255,248,240,0.65)}
+
+/* ═══════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════ */
+.screen-label{
+  font-family:'Dancing Script',cursive;
+  font-size:clamp(0.82rem,3vw,0.95rem);
+  color:var(--car);letter-spacing:0.08em;margin-bottom:0.4rem;
+}
+.title-main{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.7rem,7vw,2.8rem);
+  color:var(--cream);text-align:center;line-height:1.2;margin-bottom:0.8rem;
+}
+
+/* ═══════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:0.85rem 2rem;border-radius:50px;border:none;
+  cursor:pointer;font-size:clamp(0.9rem,3.5vw,1.05rem);
+  font-family:'Dancing Script',cursive;font-weight:600;
+  transition:transform 0.2s,box-shadow 0.2s;text-decoration:none;
+  letter-spacing:0.02em;
+}
+.btn:hover{transform:scale(1.06)}
+.btn:active{transform:scale(0.96)}
+.btn-primary{
+  background:linear-gradient(135deg,var(--car),var(--gold));
+  color:var(--db);
+  box-shadow:0 6px 25px rgba(212,175,122,0.4);
+  animation:breathe-btn 3s ease-in-out infinite;
+}
+.btn-soft{
+  background:rgba(255,248,240,0.12);color:var(--cream);
+  border:1.5px solid rgba(255,248,240,0.35);backdrop-filter:blur(8px);
+}
+.btn-dark{
+  background:rgba(92,64,51,0.75);color:var(--cream);
+  border:1.5px solid var(--mb);
+}
+@keyframes breathe-btn{
+  0%,100%{box-shadow:0 6px 25px rgba(212,175,122,0.4),0 0 0 0 rgba(232,197,71,0.3)}
+  50%{box-shadow:0 8px 35px rgba(212,175,122,0.6),0 0 20px 8px rgba(232,197,71,0.12)}
+}
+
+/* ═══════════════════════════════════════
+   SPARKLES
+═══════════════════════════════════════ */
+.sparkle-field{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.sparkle{
+  position:absolute;
+  animation:float-sparkle var(--dur,4s) var(--delay,0s) ease-in-out infinite;
+  opacity:0;font-size:var(--sz,0.8rem);
+}
+@keyframes float-sparkle{
+  0%{opacity:0;transform:translateY(0) rotate(0)}
+  20%{opacity:0.6}
+  80%{opacity:0.3}
+  100%{opacity:0;transform:translateY(-90px) rotate(180deg)}
+}
+
+/* ═══════════════════════════════════════
+   FADE-UP
+═══════════════════════════════════════ */
+.fade-up{
+  opacity:0;transform:translateY(10px);
+  animation:fade-in-up 0.7s ease forwards;
+}
+.delay-1{animation-delay:0.2s}
+.delay-2{animation-delay:0.4s}
+.delay-3{animation-delay:0.6s}
+.delay-4{animation-delay:0.8s}
+@keyframes fade-in-up{
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ═══════════════════════════════════════
+   SCREEN 1
+═══════════════════════════════════════ */
+#s1 .s1-content{
+  position:relative;z-index:2;
+  text-align:center;padding:2rem 1.5rem;
+  max-width:480px;width:100%;
+}
+.sun-icon{
+  font-size:3.5rem;display:block;margin-bottom:1rem;
+  animation:float-icon 6s ease-in-out infinite;
+}
+@keyframes float-icon{
+  0%,100%{transform:translateY(0) rotate(-5deg)}
+  50%{transform:translateY(-12px) rotate(5deg)}
+}
+#typewriter{
+  font-family:'Lora',serif;font-style:italic;
+  font-size:clamp(0.95rem,4vw,1.2rem);
+  color:var(--car);min-height:3.5em;
+  margin:0.8rem 0;line-height:1.7;
+}
+.cursor-blink{animation:blink 0.7s step-end infinite;color:var(--gold)}
+@keyframes blink{50%{opacity:0}}
+
+/* ═══════════════════════════════════════
+   SCREEN 2
+═══════════════════════════════════════ */
+#s2 .s2-content{
+  text-align:center;padding:1.5rem;
+  z-index:2;position:relative;
+  max-width:420px;width:100%;
+}
+.photo-frame{
+  position:relative;
+  width:min(280px,78vw);height:min(350px,70vw);
+  border-radius:20px;overflow:hidden;
+  box-shadow:0 20px 50px rgba(0,0,0,0.4),0 0 0 4px rgba(255,248,240,0.12);
+  margin:0 auto 1.2rem;
+  animation:float-card 5s ease-in-out infinite;
+  cursor:pointer;
+}
+.photo-frame img{
+  width:100%;height:100%;object-fit:cover;object-position:center top;
+  filter:brightness(1.05) saturate(1.1);
+  opacity:0;transition:opacity 0.8s;
+}
+.photo-frame img.loaded{opacity:1}
+.photo-frame-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 50%,rgba(61,43,31,0.55) 100%);
+  pointer-events:none;
+}
+@keyframes float-card{
+  0%,100%{transform:translateY(0) rotate(-1deg)}
+  50%{transform:translateY(-10px) rotate(1deg)}
+}
+
+/* ═══════════════════════════════════════
+   SCREEN 3 – LETTER
+═══════════════════════════════════════ */
+.letter-wrap{
+  max-width:520px;width:100%;
+  background:rgba(255,248,240,0.97);
+  border-radius:18px;padding:1.8rem 1.6rem;
+  box-shadow:0 10px 40px rgba(92,64,51,0.18);
+  border:1px solid rgba(212,175,122,0.3);
+  position:relative;
+}
+.letter-icon{font-size:2.2rem;text-align:center;margin-bottom:0.4rem}
+.letter-date{
+  font-family:'Dancing Script',cursive;color:var(--mb);
+  text-align:center;font-size:0.88rem;margin-bottom:1rem;
+}
+.letter-salutation{
+  font-family:'Playfair Display',serif;font-style:italic;
+  color:var(--db);font-size:1.25rem;margin-bottom:0.9rem;
+}
+.letter-body p{
+  font-family:'Lora',serif;color:var(--text-dark);
+  font-size:0.97rem;line-height:1.85;margin-bottom:0.9rem;
+}
+.letter-sign{
+  font-family:'Dancing Script',cursive;color:var(--mb);
+  font-size:1.05rem;margin-top:1.2rem;font-weight:600;
+}
+/* Magic words for EE5 */
+.magic-word{
+  cursor:pointer;display:inline;
+  border-bottom:1px dashed rgba(212,175,122,0.5);
+  transition:all 0.25s;
+}
+.magic-word:hover{color:var(--mb);border-bottom-color:var(--gold)}
+.magic-word.lit{color:var(--gold);border-bottom-color:var(--gold);text-shadow:0 0 8px rgba(232,197,71,0.4)}
+/* letter progress bar */
+#letter-progress{
+  position:fixed;top:0;left:0;right:0;height:3px;
+  background:rgba(212,175,122,0.2);z-index:3000;opacity:0;
+  transition:opacity 0.3s;
+}
+#letter-progress-fill{height:100%;background:var(--gold);transition:width 0.1s}
+
+/* ═══════════════════════════════════════
+   SCREEN 4 – SUPPORT
+═══════════════════════════════════════ */
+#s4 .s4-inner{
+  text-align:center;padding:1.5rem;
+  max-width:420px;width:100%;
+  z-index:2;position:relative;
+}
+.support-btn{
+  display:flex;flex-direction:column;align-items:center;gap:0.5rem;
+  background:linear-gradient(135deg,rgba(232,160,160,0.25),rgba(232,197,71,0.2));
+  border:2px solid rgba(232,160,160,0.4);
+  border-radius:22px;padding:1.8rem 3rem;
+  cursor:pointer;width:min(270px,84vw);margin:0 auto 1.2rem;
+  transition:all 0.3s ease;color:var(--cream);
+  font-family:'Dancing Script',cursive;font-size:1.25rem;
+  animation:breathe-btn 3s ease-in-out infinite;
+}
+.support-btn:hover{transform:scale(1.04);border-color:rgba(232,160,160,0.6)}
+.support-btn:active{transform:scale(0.96)}
+#message-bubble{
+  font-family:'Lora',serif;font-style:italic;
+  color:var(--cream);font-size:0.95rem;
+  min-height:2.2em;text-align:center;padding:0.5rem 1rem;
+  transition:opacity 0.3s;max-width:360px;line-height:1.6;
+}
+#heart-counter{
+  display:none;background:rgba(232,197,71,0.15);
+  border:1px solid rgba(232,197,71,0.35);border-radius:12px;
+  padding:0.45rem 1rem;color:var(--gold);
+  font-family:'Dancing Script',cursive;font-size:0.95rem;
+  margin:0.4rem auto 0;text-align:center;
+}
+#heart-counter.visible{display:block}
+
+/* ═══════════════════════════════════════
+   SCREEN 5 – GALLERY
+═══════════════════════════════════════ */
+#s5 .gal-wrap{
+  width:100%;max-width:500px;
+  display:flex;flex-direction:column;align-items:center;
+  padding:0 1rem;z-index:2;position:relative;padding-top:2.5rem;
+}
+.flip-card{
+  width:min(270px,76vw);height:min(350px,68vw);
+  perspective:1000px;cursor:pointer;position:relative;
+  flex-shrink:0;
+}
+.flip-card-inner{
+  width:100%;height:100%;position:relative;
+  transform-style:preserve-3d;
+  transition:transform 0.7s cubic-bezier(0.4,0,0.2,1);
+}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{
+  position:absolute;inset:0;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:16px;overflow:hidden;
+}
+.flip-front{
+  background:rgba(255,248,240,0.08);
+  box-shadow:0 15px 40px rgba(0,0,0,0.3),0 0 0 2px rgba(255,248,240,0.08);
+}
+.flip-front img{
+  width:100%;height:100%;object-fit:cover;
+  filter:brightness(1.05) saturate(1.1);
+  opacity:0;transition:opacity 0.8s;
+}
+.flip-front img.loaded{opacity:1}
+.flip-back{
+  transform:rotateY(180deg);
+  background:linear-gradient(160deg,rgba(92,64,51,0.97),rgba(61,43,31,0.98));
+  border:2px solid rgba(212,175,122,0.3);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:1.5rem;
+}
+.flip-back-text{
+  font-family:'Dancing Script',cursive;font-size:1.1rem;color:var(--car);line-height:1.6;
+}
+/* hover overlay on front */
+.photo-hover-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 35%,rgba(61,43,31,0.88) 100%);
+  display:flex;align-items:flex-end;padding:1rem;
+  opacity:0;transition:opacity 0.3s;pointer-events:none;
+}
+.flip-front:hover .photo-hover-overlay{opacity:1}
+.hover-text{
+  font-family:'Dancing Script',cursive;font-size:1rem;
+  color:var(--cream);text-shadow:0 2px 8px rgba(0,0,0,0.5);
+}
+/* gallery caption */
+.gal-caption{
+  text-align:center;margin-top:0.9rem;
+  font-family:'Dancing Script',cursive;font-size:1.05rem;
+  color:var(--car);min-height:2em;
+}
+.gal-caption-anim{animation:fade-in-up 0.5s ease}
+@keyframes fade-in-up{
+  from{opacity:0;transform:translateY(6px)}
+  to{opacity:1;transform:translateY(0)}
+}
+/* gallery nav */
+.gal-dots{display:flex;gap:0.5rem;justify-content:center;margin-top:0.6rem}
+.g-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,248,240,0.28);cursor:pointer;transition:all 0.3s}
+.g-dot.active{background:var(--car);transform:scale(1.4)}
+.gal-arrows{display:flex;gap:0.9rem;justify-content:center;margin-top:0.7rem}
+.g-arrow{
+  background:rgba(255,248,240,0.12);
+  border:1px solid rgba(255,248,240,0.28);
+  color:var(--cream);border-radius:50%;
+  width:44px;height:44px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1.3rem;transition:all 0.2s;
+}
+.g-arrow:hover{background:rgba(255,248,240,0.22);transform:scale(1.1)}
+/* like btn */
+.like-btn{
+  position:absolute;top:0.6rem;right:0.6rem;
+  background:rgba(0,0,0,0.25);border:none;border-radius:50%;
+  width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1rem;transition:all 0.2s;z-index:10;
+}
+.like-btn.liked{background:rgba(232,160,160,0.4)}
+
+/* ═══════════════════════════════════════
+   SCREEN 6 – GAME
+═══════════════════════════════════════ */
+#s6 .game-wrap{
+  width:100%;max-width:500px;
+  text-align:center;padding:0.8rem 1rem 0;
+  z-index:2;position:relative;
+}
+/* difficulty selector */
+#diff-selector{display:flex;flex-direction:column;align-items:center;gap:0.8rem;padding:1rem}
+.diff-title{font-family:'Playfair Display',serif;color:var(--cream);font-size:clamp(1.2rem,5vw,1.7rem);margin-bottom:0.2rem}
+.diff-subtitle{font-family:'Dancing Script',cursive;color:var(--car);font-size:0.9rem;margin-bottom:0.5rem}
+.diff-btn{
+  width:min(255px,82vw);padding:0.9rem 1.4rem;
+  border-radius:16px;border:1.5px solid rgba(255,248,240,0.25);
+  background:rgba(255,248,240,0.08);color:var(--cream);
+  font-family:'Dancing Script',cursive;font-size:1.1rem;
+  cursor:pointer;transition:all 0.22s;
+  backdrop-filter:blur(8px);text-align:center;line-height:1.5;
+}
+.diff-btn:hover{background:rgba(255,248,240,0.16);border-color:var(--car);transform:scale(1.03)}
+.diff-btn small{font-size:0.72rem;opacity:0.65}
+/* game ui */
+#game-ui{display:none;width:100%}
+.game-stat{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0 0.3rem;margin-bottom:0.5rem;
+}
+#score-display{font-family:'Dancing Script',cursive;color:var(--cream);font-size:0.95rem}
+#combo-display{font-family:'Dancing Script',cursive;color:var(--gold);font-size:0.95rem;min-height:1.3em}
+#game-area{
+  position:relative;width:min(350px,88vw);height:min(320px,60vw);
+  border-radius:18px;overflow:hidden;
+  border:1.5px solid rgba(255,248,240,0.18);
+  background:rgba(80,56,40,0.5);margin:0 auto;cursor:pointer;
+}
+/* hearts */
+.game-heart{
+  position:absolute;font-size:2.5rem;cursor:pointer;
+  -webkit-user-select:none;user-select:none;
+  animation:heart-float var(--speed,4s) linear forwards;
+  text-shadow:0 2px 8px rgba(0,0,0,0.3);transform-origin:center;
+}
+.game-heart:hover{filter:brightness(1.5) drop-shadow(0 0 8px rgba(232,160,160,0.8))}
+.game-heart.gold-heart{font-size:2.1rem}
+@keyframes heart-float{
+  0%{bottom:-60px;opacity:0}
+  8%{opacity:1}
+  92%{opacity:1}
+  100%{bottom:110%;opacity:0}
+}
+/* pop text */
+.pop-text{
+  position:absolute;pointer-events:none;
+  font-family:'Dancing Script',cursive;font-size:1.2rem;color:var(--cream);
+  text-shadow:0 2px 5px rgba(0,0,0,0.4);
+  animation:pop-float 0.8s ease forwards;z-index:10;
+}
+@keyframes pop-float{
+  0%{opacity:1;transform:translateY(0) scale(1)}
+  100%{opacity:0;transform:translateY(-48px) scale(1.25)}
+}
+#encourage-msg{
+  font-family:'Dancing Script',cursive;color:var(--rose);
+  font-size:0.9rem;min-height:1.4em;margin:0.4rem 0;
+}
+
+/* ═══════════════════════════════════════
+   SCREEN 7 – FINAL
+═══════════════════════════════════════ */
+#s7 .s7-content{
+  max-width:520px;width:100%;
+  text-align:center;padding:2rem 1.5rem;
+  position:relative;z-index:2;
+}
+.final-card{
+  background:rgba(255,248,240,0.1);border-radius:18px;
+  padding:1.8rem 1.4rem;border:1px solid rgba(255,248,240,0.18);
+  margin-bottom:1.4rem;backdrop-filter:blur(8px);
+}
+.final-card p{
+  font-family:'Lora',serif;font-style:italic;color:var(--cream);
+  font-size:0.97rem;line-height:1.85;margin-bottom:0.9rem;
+}
+.final-card p:last-child{margin-bottom:0}
+
+/* ═══════════════════════════════════════
+   TOAST
+═══════════════════════════════════════ */
+#toast-container{
+  position:fixed;top:1rem;left:50%;transform:translateX(-50%);
+  z-index:9999;display:flex;flex-direction:column;gap:0.4rem;
+  pointer-events:none;width:min(370px,90vw);
+}
+.toast{
+  background:linear-gradient(135deg,rgba(92,64,51,0.96),rgba(61,43,31,0.96));
+  border:1px solid rgba(212,175,122,0.4);border-radius:12px;
+  padding:0.7rem 1.1rem;color:var(--cream);
+  font-family:'Dancing Script',cursive;font-size:0.97rem;
+  text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.3);
+  backdrop-filter:blur(12px);animation:toast-in 0.4s ease;
+  pointer-events:none;
+}
+@keyframes toast-in{
+  from{opacity:0;transform:translateY(-8px) scale(0.95)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+.toast.out{animation:toast-out 0.3s ease forwards}
+@keyframes toast-out{to{opacity:0;transform:translateY(-6px) scale(0.95)}}
+
+/* ═══════════════════════════════════════
+   COUPLE MODAL (EE3)
+═══════════════════════════════════════ */
+#couple-modal{
+  position:fixed;inset:0;z-index:9000;
+  display:none;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0.72);backdrop-filter:blur(8px);
+}
+#couple-modal.open{display:flex}
+.couple-inner{
+  position:relative;width:min(370px,90vw);
+  background:linear-gradient(160deg,rgba(92,64,51,0.97),rgba(61,43,31,0.97));
+  border:2px solid rgba(212,175,122,0.4);border-radius:22px;
+  padding:1.8rem 1.4rem;text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  animation:popup-in 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+@keyframes popup-in{
+  from{opacity:0;transform:scale(0.82)}
+  to{opacity:1;transform:scale(1)}
+}
+.couple-photo-frame{
+  width:min(230px,70vw);height:min(230px,70vw);
+  border-radius:16px;overflow:hidden;margin:0 auto 1rem;
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  border:3px solid rgba(212,175,122,0.4);
+}
+.couple-photo-frame img{
+  width:100%;height:100%;object-fit:cover;
+  filter:brightness(1.05) saturate(1.1);
+}
+.couple-close{
+  position:absolute;top:0.7rem;right:0.8rem;
+  background:rgba(255,248,240,0.14);border:none;
+  color:var(--cream);border-radius:50%;
+  width:30px;height:30px;cursor:pointer;font-size:0.9rem;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* ═══════════════════════════════════════
+   HINT GUIDE MODAL
+═══════════════════════════════════════ */
+#hint-modal{
+  position:fixed;inset:0;z-index:8500;
+  display:none;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0.62);backdrop-filter:blur(6px);
+}
+#hint-modal.open{display:flex}
+.hint-inner{
+  width:min(350px,88vw);
+  background:linear-gradient(160deg,rgba(92,64,51,0.97),rgba(61,43,31,0.97));
+  border:1.5px solid rgba(232,197,71,0.35);border-radius:18px;
+  padding:1.4rem;animation:popup-in 0.4s ease;
+  max-height:85vh;overflow-y:auto;
+}
+.hint-title{
+  font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--gold);
+  text-align:center;margin-bottom:0.3rem;
+}
+.hint-subtitle{
+  font-family:'Lora',serif;font-style:italic;color:var(--car);
+  font-size:0.83rem;text-align:center;margin-bottom:0.9rem;
+}
+.hint-item{
+  display:flex;align-items:flex-start;gap:0.7rem;
+  margin-bottom:0.65rem;padding:0.55rem 0.7rem;
+  background:rgba(255,248,240,0.06);border-radius:10px;
+}
+.hint-num{font-family:'Dancing Script',cursive;color:var(--gold);font-size:1rem;flex-shrink:0;width:22px}
+.hint-text{font-family:'Lora',serif;font-style:italic;color:var(--cream);font-size:0.87rem;line-height:1.5}
+.hint-found{color:var(--rose)!important;text-decoration:line-through;opacity:0.55}
+
+/* ═══════════════════════════════════════
+   FINAL POPUP
+═══════════════════════════════════════ */
+#final-popup{
+  position:fixed;inset:0;z-index:9000;
+  display:none;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0.62);backdrop-filter:blur(8px);
+}
+#final-popup.open{display:flex}
+.fp-inner{
+  width:min(355px,90vw);
+  background:linear-gradient(160deg,rgba(92,64,51,0.97),rgba(61,43,31,0.97));
+  border:2px solid rgba(212,175,122,0.4);border-radius:22px;
+  padding:1.8rem 1.4rem;text-align:center;
+  animation:popup-in 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
+  max-height:90vh;overflow-y:auto;
+}
+.fp-inner .fp-emoji{font-size:2.8rem;display:block;margin-bottom:0.8rem}
+.fp-inner h2{font-family:'Playfair Display',serif;color:var(--cream);font-size:1.35rem;margin-bottom:0.8rem;line-height:1.4}
+.fp-inner .fp-msg{font-family:'Lora',serif;font-style:italic;color:var(--car);font-size:0.95rem;line-height:1.7;margin-bottom:1rem}
+.fp-inner .fp-ps{
+  font-family:'Lora',serif;font-style:italic;color:var(--gold);font-size:0.88rem;line-height:1.65;
+  padding:0.7rem;background:rgba(232,197,71,0.08);border-radius:10px;
+  border:1px solid rgba(232,197,71,0.25);margin-bottom:0.9rem;
+}
+.fp-egg-count{
+  font-family:'Dancing Script',cursive;color:var(--rose);font-size:0.85rem;
+  padding:0.4rem 0.8rem;background:rgba(232,160,160,0.1);border-radius:10px;
+  border:1px solid rgba(232,160,160,0.25);margin-bottom:0.9rem;display:block;
+}
+.fp-master{
+  font-family:'Dancing Script',cursive;color:var(--gold);font-size:0.9rem;
+  padding:0.4rem 0.8rem;background:rgba(232,197,71,0.12);border-radius:10px;
+  border:1px solid rgba(232,197,71,0.3);margin-bottom:0.9rem;display:none;
+}
+
+/* ═══════════════════════════════════════
+   EE7 / EE5 OVERLAYS
+═══════════════════════════════════════ */
+.secret-overlay{
+  position:fixed;inset:0;z-index:8700;
+  display:none;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0.72);backdrop-filter:blur(8px);
+}
+.secret-overlay.open{display:flex}
+.secret-inner{
+  width:min(350px,88vw);
+  background:linear-gradient(160deg,rgba(92,64,51,0.97),rgba(61,43,31,0.97));
+  border:1.5px solid rgba(232,197,71,0.38);border-radius:20px;
+  padding:1.8rem 1.4rem;text-align:center;
+  animation:popup-in 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+
+/* ═══════════════════════════════════════
+   EE4 ACHIEVEMENT
+═══════════════════════════════════════ */
+.achievement-overlay{
+  position:fixed;inset:0;z-index:8800;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0.5);pointer-events:none;
+}
+.achievement-card{
+  background:linear-gradient(135deg,rgba(92,64,51,0.97),rgba(61,43,31,0.97));
+  border:2px solid var(--gold);border-radius:20px;
+  padding:1.8rem 2rem;text-align:center;
+  box-shadow:0 0 40px rgba(232,197,71,0.25);
+  animation:popup-in 0.4s ease;
+}
+
+/* ═══════════════════════════════════════
+   CONFETTI
+═══════════════════════════════════════ */
+.confetti-piece{
+  position:fixed;top:-20px;
+  border-radius:2px;
+  animation:confetti-fall var(--dur,3s) linear var(--delay,0s) forwards;
+  z-index:8000;pointer-events:none;
+}
+@keyframes confetti-fall{
+  0%{transform:translateX(0) rotate(0);opacity:1;top:-20px}
+  100%{transform:translateX(var(--drift,30px)) rotate(720deg);opacity:0;top:110vh}
+}
+
+/* ═══════════════════════════════════════
+   BURST PARTICLES
+═══════════════════════════════════════ */
+@keyframes burst-particle{
+  0%{opacity:1;transform:translate(0,0) scale(1)}
+  100%{opacity:0;transform:translate(var(--bx,0px),var(--by,0px)) scale(0.4)}
+}
+</style>
+</head>
+<body>
+
+<!-- LETTER PROGRESS BAR -->
+<div id="letter-progress"><div id="letter-progress-fill"></div></div>
+
+<!-- NAV DOTS -->
+<div id="nav-dots"></div>
+
+<!-- BACK BUTTON -->
+<button id="back-btn" class="hidden" onclick="goTo(currentScreen-1)">←</button>
+
+<!-- EGG BADGE -->
+<div id="egg-badge" onclick="openHintModal()">🔓 0/8</div>
+
+<!-- HINT BUTTON -->
+<button id="hint-btn" onclick="openHintModal()">📖 secrets</button>
+
+<!-- PSST BUTTON -->
+<div id="psst-btn" onclick="triggerEE1()">✨ psst…</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container"></div>
+
+<!-- ════════════════════════════════════
+     SCREEN 1 — OPENING
+════════════════════════════════════ -->
+<div id="s1" class="screen active">
+  <div class="sparkle-field" id="sf1"></div>
+  <div class="s1-content">
+    <span class="sun-icon">☀️</span>
+    <h1 class="title-main fade-up">Good Morning,<br>Cutuuuu 🌸</h1>
+    <div id="typewriter"></div>
+    <button class="btn btn-primary fade-up delay-2" onclick="goTo(2)" style="margin-top:1.2rem">
+      Good morning →
+    </button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     SCREEN 2 — REVEAL PHOTO
+════════════════════════════════════ -->
+<div id="s2" class="screen">
+  <div class="sparkle-field" id="sf2"></div>
+  <div class="s2-content fade-up">
+    <p class="screen-label">a little good morning from me 🌸</p>
+    <div class="photo-frame" id="photo-frame-s2" onclick="handlePhotoFrameClick()">
+      <img src="photos/photo6.jpg" alt="you" onload="this.classList.add('loaded')">
+      <div class="photo-frame-overlay"></div>
+    </div>
+    <h2 class="title-main" style="font-size:clamp(1.2rem,5vw,1.7rem);margin-bottom:0.4rem">
+      Someone is thinking about you 🤍
+    </h2>
+    <p style="font-family:'Lora',serif;font-style:italic;color:var(--car);text-align:center;font-size:0.92rem;margin-bottom:1.3rem">
+      ...and smiling while doing it ✨
+    </p>
+    <button class="btn btn-primary" onclick="goTo(3)">Keep going 🌿</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     SCREEN 3 — LETTER
+════════════════════════════════════ -->
+<div id="s3" class="screen" id="s3" onscroll="updateLetterProgress()">
+  <div class="letter-wrap fade-up">
+    <div class="letter-icon">🕊️</div>
+    <div class="letter-date">a morning letter, just for you</div>
+    <div class="letter-salutation">My dearest <span class="magic-word" data-word="Cutuuuu" onclick="tapMagicWord(this)">Cutuu</span>,</div>
+    <div class="letter-body">
+      <p>Merko pta h kal college jaana tere liye bas college jaana nhi h yrr… ek mahine baad wapas jaana waise hi heavy hota h… upar se dimag mein already itni saari cheezein chal rhi hoti h.</p>
+      <p>Nd main yeh bhi jaanta hun ki uss heaviness mein maine bhi add kiya h… jo hurt maine diya, jo weight badhaya… I know I did that...</p>
+      <p>But puchuuuu, ek baat bolun… please kal yeh sab weight leke khud ko aur mat thaka dena.</p>
+      <p>Kal sab kuch perfect feel ho, sab normal lage, ya tu instantly <span class="magic-word" data-word="okay" onclick="tapMagicWord(this)">okay</span> feel kare… yeh zaroori nhi h. Agar thoda ajeeb lage, thoda heavy lage, thoda mann na kare… that's okay cutuu. Sach mein okay h.</p>
+      <p>Mrignainii… Kal bas kal h. Poori journey nhi h. Bas ek morning… ek din… ek ek step.</p>
+      <p>Bas uthna… ready hona… pahuchna… saans lena… fir thoda aur.<br><em>Itna hi...</em></p>
+      <p>Nd sun… tu na khud ko jitna credit deti h, usse boht zyada <span class="magic-word" data-word="strong" onclick="tapMagicWord(this)">strong</span> h. Mujhe pta h anxiety kabhi kabhi dimag mein bht noise create kr deti h… choti cheez bhi badi lagne lagti h… But iska matlab yeh nhi ki tu handle nhi kr payegi.</p>
+      <p>Tu kar legi cutuu… apne tareeke se… apni pace pe... Main <span class="magic-word" data-word="always" onclick="tapMagicWord(this)">always</span> hunn idhrr 🤍</p>
+      <p>Nd agar kisi point pe overwhelming lage na… bas ek sec rukna nd imagine krna koi puchuuuu ko bol rha h — <em>"oye… breathe."</em><br>Ek deep breath. Phir ek aur.<br>Bas.</p>
+      <p>Nd ek aur baat… College wale are getting your cutee <span class="magic-word" data-word="smile" onclick="tapMagicWord(this)">smile</span> for freeee… unfair h mere saath honestly....</p>
+      <p>So… kal thoda sa smile krna, thoda sa gentle rehna khud ke saath… nd yaad rkhna, Mrignainii is stronger than her anxious thoughts... <em>soo muchh strongerrrr</em> 💛</p>
+      <p>Ab ek smile toh bnti h cutuu… mere liye? 🤍</p>
+    </div>
+    <div class="letter-sign">Tumhara,<br>ek puchuuuu jo always cheering h tere liye 🌿</div>
+  </div>
+  <div style="text-align:center;margin-top:1.4rem;margin-bottom:4rem">
+    <button class="btn btn-dark" onclick="goTo(4)">Next 🌸</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     SCREEN 4 — SUPPORT
+════════════════════════════════════ -->
+<div id="s4" class="screen">
+  <div class="sparkle-field" id="sf4"></div>
+  <div class="s4-inner">
+    <p class="screen-label fade-up">emergency comfort system</p>
+    <h2 class="title-main fade-up delay-1" style="font-size:clamp(1.2rem,5vw,1.9rem);margin-bottom:0">Emergency</h2>
+    <h2 class="title-main fade-up delay-1" style="font-size:clamp(1.4rem,6vw,2.3rem);margin-bottom:0.7rem">Puchuuuuu Support 🫂</h2>
+    <p style="font-family:'Lora',serif;font-style:italic;color:var(--car);font-size:0.88rem;margin-bottom:0.9rem" class="fade-up delay-2">tap whenever you need a little reminder</p>
+    <button class="support-btn fade-up delay-2" id="support-btn" onclick="handleSupportClick()">
+      <span style="font-size:2.1rem">🫶</span>
+      <span>tap me</span>
+    </button>
+    <div class="heart-counter" id="heart-counter">7 hearts given to you 🤍</div>
+    <div id="message-bubble">press the button whenever you need 🤍</div>
+    <div class="fade-up delay-3" style="margin-top:1.1rem">
+      <button class="btn btn-soft" onclick="goTo(5)">see our memories →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     SCREEN 5 — GALLERY
+════════════════════════════════════ -->
+<div id="s5" class="screen">
+  <div class="sparkle-field" id="sf5"></div>
+  <div style="position:absolute;top:1rem;text-align:center;width:100%;pointer-events:none;z-index:3">
+    <p class="screen-label">✨ our memories ✨</p>
+  </div>
+  <div class="gal-wrap">
+    <div id="gallery-card-container" style="position:relative;width:min(270px,76vw);height:min(350px,68vw)"></div>
+    <div class="gal-caption gal-caption-anim" id="gallery-caption"></div>
+    <div class="gal-dots" id="gallery-dots"></div>
+    <div class="gal-arrows">
+      <button class="g-arrow" onclick="galleryNav(-1)">‹</button>
+      <button class="g-arrow" onclick="galleryNav(1)">›</button>
+    </div>
+    <div style="margin-top:0.9rem">
+      <button class="btn btn-soft" style="font-size:0.88rem;padding:0.65rem 1.7rem" onclick="goTo(6)">let's play a game →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     SCREEN 6 — HEART GAME
+════════════════════════════════════ -->
+<div id="s6" class="screen">
+  <div class="sparkle-field" id="sf6"></div>
+  <div class="game-wrap">
+    <p class="screen-label fade-up">✨ catch the hearts! ✨</p>
+    <div id="diff-selector">
+      <div class="diff-title fade-up">Choose your vibe 💛</div>
+      <div class="diff-subtitle fade-up delay-1">You can stop anytime 🤍</div>
+      <button class="diff-btn fade-up delay-1" onclick="startGame('easy')">
+        Just for fun 🤍<br><small>slow hearts, very forgiving</small>
+      </button>
+      <button class="diff-btn fade-up delay-2" onclick="startGame('normal')">
+        Let's play 💛<br><small>balanced</small>
+      </button>
+      <button class="diff-btn fade-up delay-3" onclick="startGame('hard')">
+        Challenge me ✨<br><small>faster, more demanding</small>
+      </button>
+    </div>
+    <div id="game-ui">
+      <div class="game-stat">
+        <div id="score-display">Hearts caught: <strong id="score-val">0</strong> 🤍</div>
+        <div id="combo-display"></div>
+      </div>
+      <div id="game-area"></div>
+      <div id="encourage-msg"></div>
+      <div style="display:flex;gap:0.7rem;justify-content:center;margin-top:0.7rem;flex-wrap:wrap">
+        <button class="btn btn-soft" style="font-size:0.83rem;padding:0.55rem 1.3rem" onclick="stopGame()">Stop playing? 🌸</button>
+        <button class="btn btn-soft" style="font-size:0.83rem;padding:0.55rem 1.3rem" onclick="goTo(7)">last message →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     SCREEN 7 — FINAL
+════════════════════════════════════ -->
+<div id="s7" class="screen" onscroll="return">
+  <div class="sparkle-field" id="sf7"></div>
+  <div class="s7-content">
+    <p class="screen-label fade-up">and finally…</p>
+    <h2 class="title-main fade-up delay-1" style="margin-bottom:1rem">You already matter. 🤍</h2>
+    <div class="final-card fade-up delay-2">
+      <p>So cutuu… when you step into college tomorrow, don't carry the pressure of having everything figured out, okay?</p>
+      <p>Bas be you… meri pyaari si Mrignainii.</p>
+      <p>Ek class at a time… ek breath at a time… ek smile at a time.</p>
+      <p>And whenever things feel thoda heavy… just remember, somewhere there's a puchuuuu who is already proud of you for showing up...</p>
+      <p>Now go tomorrow and be your cute stubborn self… nd smilleeeee as much as you did on 19 April '25.</p>
+      <p><em>All the best, Cutuu. You got this. Main hunn… always cheering for you 🤍</em></p>
+    </div>
+    <button class="btn btn-primary fade-up delay-3" id="smile-btn" onclick="handleSmileBtn()" style="margin-bottom:1.5rem">
+      One smile for me? 😊
+    </button>
+    <div id="egg-summary" style="display:none;font-family:'Dancing Script',cursive;color:var(--car);font-size:0.85rem;margin-bottom:1rem">
+      Secrets found: 0/8 🔓
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     COUPLE MODAL — EE3
+════════════════════════════════════ -->
+<div id="couple-modal" onclick="closeCoupleModal(event)">
+  <div class="couple-inner">
+    <button class="couple-close" onclick="closeCoupleModal()">✕</button>
+    <h3 style="font-family:'Playfair Display',serif;font-style:italic;color:var(--cream);font-size:1.2rem;margin-bottom:0.8rem">
+      This is us. This is what matters. 🤍
+    </h3>
+    <div class="couple-photo-frame">
+      <img src="photos/us.jpg" alt="us" style="opacity:0;transition:opacity 0.8s" onload="this.style.opacity=1">
+    </div>
+    <p style="font-family:'Lora',serif;font-style:italic;color:var(--car);font-size:0.92rem;margin-bottom:1.1rem;line-height:1.6">
+      Every moment with you is my favorite moment 🌸
+    </p>
+    <button class="btn btn-soft" style="font-size:0.88rem" onclick="closeCoupleModal()">
+      carry this with you 🌿
+    </button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     HINT GUIDE MODAL
+════════════════════════════════════ -->
+<div id="hint-modal" onclick="closeHintModal(event)">
+  <div class="hint-inner">
+    <div class="hint-title">📖 psst… secrets</div>
+    <div class="hint-subtitle">there are 8 hidden surprises in here…</div>
+    <div id="hint-list"></div>
+    <button class="btn btn-soft" style="width:100%;margin-top:0.5rem;font-size:0.88rem" onclick="closeHintModal()">
+      close 🌸
+    </button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     FINAL POPUP
+════════════════════════════════════ -->
+<div id="final-popup" onclick="closeFinalPopup(event)">
+  <div class="fp-inner" id="fp-inner">
+    <span class="fp-emoji">🤍</span>
+    <h2>Proud of you already,<br>Mrignainii</h2>
+    <p class="fp-msg">You showed up today. You opened this. You smiled (even a little). That's everything. Go be brilliant — I'll be rooting for you. 🌸</p>
+    <span class="fp-egg-count" id="fp-egg-count">secrets found: 0/8 🔓</span>
+    <span class="fp-master" id="fp-master">🏆 Easter Egg Master! You found all 8!</span>
+    <button class="btn btn-primary" onclick="closeFinalPopup()" style="width:100%">carry this with you 🌿</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     EE7 — TYPEWRITER SECRET
+════════════════════════════════════ -->
+<div id="ee7-overlay" class="secret-overlay" onclick="closeEE7(event)">
+  <div class="secret-inner">
+    <div style="font-size:2.4rem;margin-bottom:0.8rem">💛</div>
+    <h3 style="font-family:'Playfair Display',serif;font-style:italic;color:var(--cream);font-size:1.15rem;margin-bottom:0.8rem;line-height:1.4">
+      Actually… I have something else to tell you
+    </h3>
+    <p style="font-family:'Lora',serif;font-style:italic;color:var(--car);font-size:0.92rem;line-height:1.7;margin-bottom:1rem">
+      You know what? I wrote this whole thing because I couldn't find words to say in person. But here's the truth: <em>You make me better, Mrignainii. Every. Single. Day.</em>
+    </p>
+    <p style="font-family:'Dancing Script',cursive;color:var(--gold);font-size:1.05rem;margin-bottom:1rem">— Puchuuuu 🤍</p>
+    <button class="btn btn-soft" style="font-size:0.88rem" onclick="closeEE7()">I know 🤍</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     EE5 — HIDDEN LOVE NOTE
+════════════════════════════════════ -->
+<div id="ee5-overlay" class="secret-overlay" onclick="closeEE5(event)">
+  <div class="secret-inner">
+    <div style="font-size:2.4rem;margin-bottom:0.8rem">🔓</div>
+    <p style="font-family:'Dancing Script',cursive;color:var(--gold);font-size:0.95rem;margin-bottom:0.5rem">
+      you found the hidden message!
+    </p>
+    <h3 style="font-family:'Playfair Display',serif;font-style:italic;color:var(--cream);font-size:1.05rem;margin-bottom:0.8rem;line-height:1.55">
+      "It's Okay, cutuu. You are Strong. I'm Always here. And that Smile of yours? It's everything."
+    </h3>
+    <p style="font-family:'Dancing Script',cursive;color:var(--car);font-size:1rem;margin-bottom:1rem">
+      — Puchuuuu 🤍
+    </p>
+    <button class="btn btn-soft" style="font-size:0.88rem" onclick="closeEE5()">close 🌸</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+//  PHOTO DATA
+// ══════════════════════════════════════════
+const PHOTOS = [
+  {
+    src:'photos/photo1.jpg',
+    cap:'ufffffff... cute girl with gazzillion hobbies 🌸',
+    hover:'When you smile, my heart does a full reset 💛',
+    back:'when you smile my heart does a full reset 🤍'
+  },
+  {
+    src:'photos/photo2.jpg',
+    cap:"Prateek's heart is pumping at lightspeed 💓",
+    hover:'Look at that smile — dangerous levels of cute ✨',
+    back:'look at that smile — no scalpels needed 🌸'
+  },
+  {
+    src:'photos/photo3.jpg',
+    cap:'Someone dissected my heart with a smile 💛',
+    hover:'that smile should come with a warning label 🌿',
+    back:'that smile should come with a warning label 💛'
+  },
+  {
+    src:'photos/photo4.jpg',
+    cap:'No scalpels needed to dissect if you have that smile 🤍',
+    hover:'she walked in and suddenly everything made sense ✨',
+    back:'she walked in and suddenly everything made sense 🌸'
+  },
+  {
+    src:'photos/photo5.jpg',
+    cap:'Cutuuuu in all the ways ✨',
+    hover:'my favorite person in a thousand frames 🤍',
+    back:'my favorite person in a thousand frames 🌿'
+  },
+  {
+    src:'photos/secret.jpg',
+    cap:'Our favorite moment 🌿  (secret unlocked 🔓)',
+    hover:'This is my favorite photo of us, cutuu 🤍',
+    back:'this is my favorite photo of us, cutuu 🌸',
+    secret:true
+  }
+];
+
+const SUPPORT_MSGS = [
+  "Tu kar legi. I promise. 🌸",
+  "Breathe, Mrignainii. One breath at a time. 🌿",
+  "One class at a time. Just one.",
+  "I believe in you — more than you know. 🤍",
+  "Proud of you already, even before you've done a thing.",
+  "You are stronger than today's anxiety. Always.",
+  "It's okay to feel nervous. It means you care. 💛",
+  "You've survived 100% of your hard days so far. 🌟",
+  "Anxiety is loud. But you are louder.",
+  "You don't have to be perfect. Just present.",
+  "You're doing great, even when it doesn't feel like it.",
+  "Hug yourself for a second. You deserve it. 🫂",
+  "Your anxiety is not your story. You are.",
+  "Small steps are still steps. Keep going, Cutuuuu.",
+  "Someone is thinking about you and smiling. 🌸",
+];
+
+const PSST_MSGS = [
+  "You found the secret corner 🌿",
+  "hi cutuuuu 🌸",
+  "someone is thinking about you rn 🤍",
+  "you're doing amazingly 💛",
+  "one more breath. you got this ✨",
+  "Your anxiety doesn't define your strength — and I see it all 🤍",
+  "Between you and me, I think you're unbelievably brave",
+  "That smile of yours? Yeah, it's my favorite thing 🌸",
+  "You make everything seem possible, even on hard days",
+  "Prateek thinks you're extraordinary, just FYI 💛",
+  "You're the kind of person people write stories about",
+  "I'd catch a thousand hearts just to see you smile",
+  "Your existence is a gift, cutuu. Never forget that.",
+  "You light up my entire world 🤍",
+  "Keep being you. The world needs more of that.",
+];
+
+const ENCOURAGE_MSGS = [
+  "You're doing great! 🌸",
+  "Look at you go! 💛",
+  "Keep catching hearts, cutuu! 🤍",
+  "So proud of you already! ✨",
+  "You're amazing at this! 🌿",
+  "Yes yes yes!! 💛",
+  "Look at that score!! 🌸",
+];
+
+const DIFF_CONFIG = {
+  easy:   { spawnMs:1400, speedRange:[5,8]   },
+  normal: { spawnMs:1000, speedRange:[3.5,6] },
+  hard:   { spawnMs:700,  speedRange:[2,3.8] },
+};
+
+const HINT_CLUES = [
+  { id:1, clue:'💛 The button knows things... keep tapping' },
+  { id:2, clue:'💓 7 taps unlock something sweet' },
+  { id:3, clue:'🖼️ 21 taps open the big surprise' },
+  { id:4, clue:'🎮 Catch 10 hearts in a row' },
+  { id:5, clue:'💌 5 special words hide a secret note' },
+  { id:6, clue:'📸 Gallery has a hidden slide' },
+  { id:7, clue:'✍️ The opening has more to say (spacebar!)' },
+  { id:8, clue:'😊 Three smiles might reveal everything' },
+];
+
+// ══════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════
+let currentScreen = 1;
+const TOTAL = 7;
+
+// Persistence
+let eggsFound = new Set(JSON.parse(localStorage.getItem('d_eggs') || '[]'));
+let supportClicks = parseInt(localStorage.getItem('d_support') || '0');
+let likedPhotos = new Set(JSON.parse(localStorage.getItem('d_liked') || '[]'));
+
+// Support
+let lastSupportMsgIdx = -1;
+
+// EE1 (psst)
+let psstCount = 0;
+
+// EE2/EE3 — handled via supportClicks
+
+// EE4 (game combo)
+// handled in game logic
+
+// EE5 (letter words)
+let ee5WordsFound = [];
+const EE5_SEQ = ['Cutuuuu', 'okay', 'strong', 'always', 'smile'];
+
+// EE6 (gallery secret)
+let galSecretUnlocked = eggsFound.has(6);
+let ee6Photo2Clicks = 0;
+let ee6RapidArrows = 0;
+let ee6LastArrow = 0;
+
+// EE7 (typewriter spacebar)
+let ee7SpaceCount = 0;
+let ee7Activated = eggsFound.has(7);
+let typewriterDone = false;
+
+// EE8 (smile button)
+let smileCount = 0;
+let ee8PsAppended = false;
+
+// Photo frame (S2) alternate EE7 trigger
+let photoFrameClicks = 0;
+
+// Gallery
+let galIdx = 0;
+
+// Game
+let gameRunning = false;
+let gameScore = 0;
+let gameCombo = 0;
+let gameCatchCount = 0;
+let spawnTimer = null;
+let gameBest = parseInt(localStorage.getItem('d_best') || '0');
+let heartCounter = 0;
+
+// ══════════════════════════════════════════
+//  EASTER EGG CORE
+// ══════════════════════════════════════════
+function unlockEgg(id, msg) {
+  if (eggsFound.has(id)) return false;
+  eggsFound.add(id);
+  localStorage.setItem('d_eggs', JSON.stringify([...eggsFound]));
+  updateEggBadge();
+  if (msg) showToast('🔓 ' + msg, 'gold');
+  checkHintReveal();
+  return true;
+}
+
+function updateEggBadge() {
+  const badge = document.getElementById('egg-badge');
+  const n = eggsFound.size;
+  badge.textContent = '🔓 ' + n + '/8';
+  if (n >= 8) badge.style.borderColor = 'rgba(232,197,71,0.85)';
+}
+
+function checkHintReveal() {
+  const btn = document.getElementById('hint-btn');
+  if (eggsFound.size >= 3) btn.classList.add('visible');
+}
+
+function openHintModal() {
+  buildHintList();
+  document.getElementById('hint-modal').classList.add('open');
+}
+
+function closeHintModal(e) {
+  if (!e || e.target === document.getElementById('hint-modal')) {
+    document.getElementById('hint-modal').classList.remove('open');
+  }
+}
+
+function buildHintList() {
+  const el = document.getElementById('hint-list');
+  el.innerHTML = HINT_CLUES.map(h => {
+    const found = eggsFound.has(h.id);
+    return '<div class="hint-item">'
+      + '<div class="hint-num">' + h.id + '</div>'
+      + '<div class="hint-text' + (found ? ' hint-found' : '') + '">' + h.clue + (found ? ' ✓' : '') + '</div>'
+      + '</div>';
+  }).join('');
+}
+
+// ══════════════════════════════════════════
+//  NAVIGATION
+// ══════════════════════════════════════════
+function goTo(n) {
+  if (n < 1 || n > TOTAL) return;
+  const prev = document.getElementById('s' + currentScreen);
+  if (prev) prev.classList.remove('active');
+  currentScreen = n;
+  const next = document.getElementById('s' + n);
+  next.classList.add('active');
+  next.scrollTop = 0;
+  updateNavUI();
+  onEnterScreen(n);
+}
+
+function updateNavUI() {
+  document.querySelectorAll('.dot').forEach((d, i) => {
+    d.classList.toggle('active', i + 1 === currentScreen);
+  });
+  const back = document.getElementById('back-btn');
+  back.classList.toggle('hidden', currentScreen === 1);
+  // letter progress bar
+  const lp = document.getElementById('letter-progress');
+  lp.style.opacity = currentScreen === 3 ? '1' : '0';
+  // egg summary on s7
+  const es = document.getElementById('egg-summary');
+  if (currentScreen === 7) {
+    es.style.display = 'block';
+    es.textContent = 'Secrets found: ' + eggsFound.size + '/8 🔓';
+  }
+}
+
+function onEnterScreen(n) {
+  if (n === 5) initGallery();
+  if (n === 6 && !gameRunning) resetGameUI();
+  if (n === 1 && !typewriterDone) startTypewriter();
+}
+
+// ══════════════════════════════════════════
+//  SWIPE + KEYBOARD
+// ══════════════════════════════════════════
+let tStartX = 0, tStartY = 0;
+document.addEventListener('touchstart', e => {
+  tStartX = e.touches[0].clientX;
+  tStartY = e.touches[0].clientY;
+}, { passive:true });
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - tStartX;
+  const dy = e.changedTouches[0].clientY - tStartY;
+  if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 52) {
+    if (currentScreen !== 3 && currentScreen !== 7) {
+      if (dx < 0) goTo(currentScreen + 1);
+      else goTo(currentScreen - 1);
+    }
+  }
+}, { passive:true });
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') goTo(currentScreen + 1);
+  else if (e.key === 'ArrowLeft') goTo(currentScreen - 1);
+  else if (e.key === ' ' && currentScreen === 1 && !ee7Activated) {
+    e.preventDefault();
+    ee7SpaceCount++;
+    if (ee7SpaceCount >= 3) triggerEE7();
+  }
+  else if (e.key === 'Escape') {
+    closeAllModals();
+  }
+});
+
+function closeAllModals() {
+  ['couple-modal','hint-modal','final-popup'].forEach(id => {
+    document.getElementById(id).classList.remove('open');
+  });
+  document.getElementById('ee7-overlay').classList.remove('open');
+  document.getElementById('ee5-overlay').classList.remove('open');
+}
+
+// ══════════════════════════════════════════
+//  TYPEWRITER (Screen 1)
+// ══════════════════════════════════════════
+const TW_LINES = [
+  "Good morning, Mrignainii...",
+  "Today is going to be okay.",
+  "Take a breath. You've got this.",
+  "Made with love, just for you. 🌸"
+];
+
+function startTypewriter() {
+  const el = document.getElementById('typewriter');
+  let lineIdx = 0, charIdx = 0, typing = true;
+
+  function tick() {
+    if (lineIdx >= TW_LINES.length) {
+      el.innerHTML = TW_LINES[TW_LINES.length - 1] + '<span class="cursor-blink">|</span>';
+      typewriterDone = true;
+      return;
+    }
+    const line = TW_LINES[lineIdx];
+    if (typing) {
+      charIdx++;
+      el.innerHTML = line.slice(0, charIdx) + '<span class="cursor-blink">|</span>';
+      if (charIdx >= line.length) { typing = false; setTimeout(tick, 1100); }
+      else setTimeout(tick, 58);
+    } else {
+      charIdx--;
+      el.innerHTML = line.slice(0, charIdx) + '<span class="cursor-blink">|</span>';
+      if (charIdx <= 0) { lineIdx++; charIdx = 0; typing = true; setTimeout(tick, 350); }
+      else setTimeout(tick, 28);
+    }
+  }
+  tick();
+}
+
+// ══════════════════════════════════════════
+//  EE1 — PSST CORNER
+// ══════════════════════════════════════════
+function triggerEE1() {
+  psstCount++;
+  const msg = PSST_MSGS[psstCount % PSST_MSGS.length];
+  showToast(msg, psstCount % 2 === 0 ? 'rose' : 'gold');
+  if (psstCount === 5) {
+    setTimeout(() => showToast('🔓 Secret Admirer Mode unlocked! 💛', 'gold'), 400);
+  }
+  if (psstCount >= 10 && !eggsFound.has(1)) {
+    unlockEgg(1, 'Secret Corner discovered! 🌟');
+  }
+  burst(window.innerWidth - 60, window.innerHeight - 110, 8, ['💛','🌸','✨','🤍']);
+}
+
+// ══════════════════════════════════════════
+//  EE2 & EE3 — SUPPORT BUTTON
+// ══════════════════════════════════════════
+function handleSupportClick() {
+  supportClicks++;
+  localStorage.setItem('d_support', supportClicks);
+
+  // rotate message
+  let idx;
+  do { idx = Math.floor(Math.random() * SUPPORT_MSGS.length); } while (idx === lastSupportMsgIdx && SUPPORT_MSGS.length > 1);
+  lastSupportMsgIdx = idx;
+  const bubble = document.getElementById('message-bubble');
+  bubble.style.opacity = '0';
+  setTimeout(() => { bubble.textContent = SUPPORT_MSGS[idx]; bubble.style.opacity = '1'; }, 220);
+
+  // heart counter badge
+  const counter = document.getElementById('heart-counter');
+  if (supportClicks >= 7) {
+    counter.classList.add('visible');
+    counter.textContent = supportClicks + ' hearts given to you 🤍';
+  }
+
+  // EE2 at 7 clicks
+  if (supportClicks === 7 && !eggsFound.has(2)) {
+    unlockEgg(2, 'Heart Counter Badge unlocked! 💛');
+    burst(window.innerWidth / 2, window.innerHeight * 0.5, 14, ['💛','🤍','💖','🌸']);
+  }
+
+  // EE3 at 21 clicks
+  if (supportClicks >= 21 && !eggsFound.has(3)) {
+    unlockEgg(3, 'The Photo of Us — revealed! 🤍');
+    setTimeout(openCoupleModal, 600);
+  }
+
+  // animate button
+  const btn = document.getElementById('support-btn');
+  btn.style.transform = 'scale(0.94)';
+  setTimeout(() => btn.style.transform = '', 180);
+
+  burst(window.innerWidth / 2, window.innerHeight * 0.52, 5, ['🤍','💛','🌸']);
+}
+
+function openCoupleModal() {
+  document.getElementById('couple-modal').classList.add('open');
+  burst(window.innerWidth / 2, window.innerHeight / 2, 18, ['💛','🤍','🌸','✨']);
+}
+
+function closeCoupleModal(e) {
+  if (!e || e.target === document.getElementById('couple-modal')) {
+    document.getElementById('couple-modal').classList.remove('open');
+    if (eggsFound.has(3)) {
+      setTimeout(() => showToast('This is just the beginning of our story, cutuu. More chapters coming 📖🤍', 'gold'), 300);
+    }
+  }
+}
+
+// ══════════════════════════════════════════
+//  EE5 — MAGIC WORDS IN LETTER
+// ══════════════════════════════════════════
+function tapMagicWord(el) {
+  const word = el.dataset.word;
+  const expected = EE5_SEQ[ee5WordsFound.length];
+  if (word === expected) {
+    el.classList.add('lit');
+    ee5WordsFound.push(word);
+    showToast('✨ ' + ee5WordsFound.length + '/5 words...', 'gold');
+    if (ee5WordsFound.length >= 5 && !eggsFound.has(5)) {
+      unlockEgg(5, 'Hidden love note discovered! 💛');
+      setTimeout(() => document.getElementById('ee5-overlay').classList.add('open'), 600);
+    }
+  } else {
+    // wrong order — reset
+    el.style.color = 'var(--rose)';
+    setTimeout(() => el.style.color = '', 500);
+    if (ee5WordsFound.length > 0) {
+      showToast('Hmm, try again from Cutuuuu 🌸');
+      ee5WordsFound = [];
+      document.querySelectorAll('.magic-word.lit').forEach(w => w.classList.remove('lit'));
+    }
+  }
+}
+
+function closeEE5(e) {
+  if (!e || e.target === document.getElementById('ee5-overlay')) {
+    document.getElementById('ee5-overlay').classList.remove('open');
+  }
+}
+
+// ══════════════════════════════════════════
+//  EE6 — GALLERY SECRET PHOTO
+// ══════════════════════════════════════════
+function handleGalleryPhotoClick() {
+  if (galIdx === 1 && !galSecretUnlocked) {
+    ee6Photo2Clicks++;
+    if (ee6Photo2Clicks === 3) showToast('Something might happen... try the arrow fast! ✨');
+  }
+}
+
+function checkRapidArrow() {
+  if (ee6Photo2Clicks < 3 || galSecretUnlocked) return;
+  const now = Date.now();
+  if (now - ee6LastArrow < 900) {
+    ee6RapidArrows++;
+    if (ee6RapidArrows >= 5) {
+      unlockEgg(6, 'Secret photo unlocked! 📸');
+      galSecretUnlocked = true;
+      ee6Photo2Clicks = 0;
+      ee6RapidArrows = 0;
+      setTimeout(() => {
+        galIdx = 5;
+        renderGalleryCard();
+        showToast('🤍 Our Favorite Moment — revealed!', 'rose');
+      }, 400);
+    }
+  } else {
+    ee6RapidArrows = 1;
+  }
+  ee6LastArrow = now;
+}
+
+// ══════════════════════════════════════════
+//  EE7 — TYPEWRITER SPACEBAR
+// ══════════════════════════════════════════
+function triggerEE7() {
+  if (ee7Activated) return;
+  ee7Activated = true;
+  unlockEgg(7, 'Typewriter secret discovered! 💛');
+  setTimeout(() => document.getElementById('ee7-overlay').classList.add('open'), 200);
+}
+
+function closeEE7(e) {
+  if (!e || e.target === document.getElementById('ee7-overlay')) {
+    document.getElementById('ee7-overlay').classList.remove('open');
+  }
+}
+
+// ══════════════════════════════════════════
+//  EE8 — SMILE BUTTON × 3
+// ══════════════════════════════════════════
+function handleSmileBtn() {
+  smileCount++;
+  if (smileCount >= 3 && !eggsFound.has(8)) {
+    unlockEgg(8, 'P.S. revealed — you found everything! 🤍');
+    if (!ee8PsAppended) {
+      ee8PsAppended = true;
+      const ps = document.createElement('p');
+      ps.className = 'fp-ps';
+      ps.textContent = 'P.S. — I\'m proud of you for opening this. For reading this. For existing. Never stop, cutuu. 🤍';
+      const inner = document.getElementById('fp-inner');
+      inner.insertBefore(ps, inner.querySelector('.btn-primary'));
+    }
+  }
+  triggerFinalMoment();
+}
+
+function triggerFinalMoment() {
+  launchConfetti();
+  document.getElementById('fp-egg-count').textContent = 'secrets found: ' + eggsFound.size + '/8 🔓';
+  if (eggsFound.size >= 8) document.getElementById('fp-master').style.display = 'block';
+  document.getElementById('final-popup').classList.add('open');
+}
+
+function closeFinalPopup(e) {
+  if (!e || e.target === document.getElementById('final-popup')) {
+    document.getElementById('final-popup').classList.remove('open');
+  }
+}
+
+// ══════════════════════════════════════════
+//  SCREEN 2 — PHOTO FRAME CLICK (alt EE7)
+// ══════════════════════════════════════════
+function handlePhotoFrameClick() {
+  photoFrameClicks++;
+  if (photoFrameClicks >= 7 && !ee7Activated) triggerEE7();
+}
+
+// ══════════════════════════════════════════
+//  LETTER PROGRESS BAR
+// ══════════════════════════════════════════
+function updateLetterProgress() {
+  const s = document.getElementById('s3');
+  const pct = s.scrollTop / Math.max(1, s.scrollHeight - s.clientHeight) * 100;
+  document.getElementById('letter-progress-fill').style.width = pct + '%';
+}
+
+// Hook scroll event properly
+document.getElementById('s3').addEventListener('scroll', updateLetterProgress, { passive:true });
+
+// ══════════════════════════════════════════
+//  GALLERY
+// ══════════════════════════════════════════
+function initGallery() {
+  renderGalleryCard();
+  renderGalleryDots();
+}
+
+function getVisiblePhotos() {
+  return (galSecretUnlocked || eggsFound.has(6)) ? PHOTOS : PHOTOS.slice(0, 5);
+}
+
+function renderGalleryCard() {
+  const photos = getVisiblePhotos();
+  if (galIdx >= photos.length) galIdx = photos.length - 1;
+  const photo = photos[galIdx];
+  const liked = likedPhotos.has(galIdx);
+  const container = document.getElementById('gallery-card-container');
+  container.innerHTML = '';
+
+  // Build flip card
+  const card = document.createElement('div');
+  card.className = 'flip-card';
+  card.innerHTML = `
+    <div class="flip-card-inner">
+      <div class="flip-front" id="gal-front-${galIdx}">
+        <img src="${photo.src}" alt="memory ${galIdx+1}" onload="this.classList.add('loaded')">
+        <div class="photo-hover-overlay"><div class="hover-text">♡ ${photo.hover}</div></div>
+        <button class="like-btn ${liked ? 'liked' : ''}" title="${liked?'unlike':'like'}">${liked ? '🤍' : '♡'}</button>
+      </div>
+      <div class="flip-back">
+        <div class="flip-back-text">${photo.back}</div>
+        <div style="font-family:'Dancing Script',cursive;color:var(--rose);font-size:0.82rem;margin-top:0.9rem">tap to flip back 🌸</div>
+      </div>
+    </div>`;
+
+  // flip toggle
+  let flipped = false;
+  card.addEventListener('click', (e) => {
+    // don't flip if like button was clicked
+    if (e.target.closest('.like-btn')) return;
+    flipped = !flipped;
+    card.classList.toggle('flipped', flipped);
+    // EE6 photo click tracking (on front face only)
+    if (!flipped) handleGalleryPhotoClick();
+  });
+
+  // like button
+  const likeBtn = card.querySelector('.like-btn');
+  likeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (likedPhotos.has(galIdx)) { likedPhotos.delete(galIdx); }
+    else { likedPhotos.add(galIdx); }
+    localStorage.setItem('d_liked', JSON.stringify([...likedPhotos]));
+    renderGalleryCard();
+  });
+
+  container.appendChild(card);
+
+  // caption
+  const capEl = document.getElementById('gallery-caption');
+  capEl.className = 'gal-caption';
+  capEl.textContent = '♡ ' + photo.cap;
+  void capEl.offsetWidth;
+  capEl.classList.add('gal-caption-anim');
+
+  renderGalleryDots();
+}
+
+function renderGalleryDots() {
+  const photos = getVisiblePhotos();
+  const el = document.getElementById('gallery-dots');
+  el.innerHTML = photos.map((_, i) =>
+    `<div class="g-dot ${i === galIdx ? 'active' : ''}" onclick="galJump(${i})"></div>`
+  ).join('');
+}
+
+function galJump(i) { galIdx = i; renderGalleryCard(); }
+
+function galleryNav(dir) {
+  const photos = getVisiblePhotos();
+  if (dir === 1) checkRapidArrow();
+  galIdx = (galIdx + dir + photos.length) % photos.length;
+  renderGalleryCard();
+}
+
+// ══════════════════════════════════════════
+//  GAME
+// ══════════════════════════════════════════
+function resetGameUI() {
+  document.getElementById('diff-selector').style.display = 'flex';
+  document.getElementById('game-ui').style.display = 'none';
+  document.getElementById('game-area').innerHTML = '';
+}
+
+function startGame(diff) {
+  const cfg = DIFF_CONFIG[diff];
+  localStorage.setItem('d_diff', diff);
+  gameScore = 0;
+  gameCombo = 0;
+  gameCatchCount = 0;
+  gameRunning = true;
+  heartCounter = 0;
+
+  document.getElementById('diff-selector').style.display = 'none';
+  document.getElementById('game-ui').style.display = 'block';
+  document.getElementById('score-val').textContent = '0';
+  document.getElementById('combo-display').textContent = '';
+  document.getElementById('encourage-msg').textContent = "Don't worry about perfection — just have fun! 💛";
+  document.getElementById('game-area').innerHTML = '';
+
+  // tutorial heart first
+  setTimeout(() => {
+    spawnHeart(cfg, true);
+    setTimeout(() => {
+      if (gameRunning) spawnTimer = setInterval(() => spawnHeart(cfg, false), cfg.spawnMs);
+    }, 2800);
+  }, 700);
+}
+
+function spawnHeart(cfg, isTutorial) {
+  if (!gameRunning) return;
+  const area = document.getElementById('game-area');
+  const areaW = area.offsetWidth;
+  const isGold = !isTutorial && Math.random() < 0.12;
+  const emojis = isTutorial ? ['💗'] : ['🤍','💗','🌸'];
+
+  const h = document.createElement('div');
+  h.className = 'game-heart' + (isGold ? ' gold-heart' : '');
+  h.textContent = isGold ? '💛' : emojis[Math.floor(Math.random() * emojis.length)];
+  h.id = 'gh' + (heartCounter++);
+
+  const [mn, mx] = cfg.speedRange;
+  const speed = (mn + Math.random() * (mx - mn)).toFixed(1);
+  const xPct = isTutorial ? 42 : (5 + Math.random() * 82);
+  h.style.cssText = `left:${xPct}%;--speed:${speed}s`;
+
+  h.addEventListener('click', e => { e.stopPropagation(); catchHeart(h, isGold, isTutorial); });
+  h.addEventListener('touchstart', e => { e.stopPropagation(); e.preventDefault(); catchHeart(h, isGold, isTutorial); }, { passive:false });
+
+  area.appendChild(h);
+  h.addEventListener('animationend', () => {
+    if (h.parentNode) { h.remove(); softComboReset(); }
+  });
+}
+
+function catchHeart(el, isGold, isTutorial) {
+  if (!el.parentNode) return;
+  const area = document.getElementById('game-area');
+  const elRect = el.getBoundingClientRect();
+  const areaRect = area.getBoundingClientRect();
+  const px = elRect.left - areaRect.left + elRect.width / 2;
+  const py = elRect.top - areaRect.top;
+  el.remove();
+
+  if (isTutorial) {
+    showToast('Like this! Easy peasy 🤍');
+    return;
+  }
+
+  gameCombo++;
+  gameCatchCount++;
+  const multiplier = gameCombo >= 3 ? 2 : 1;
+  const pts = (isGold ? 3 : 1) * multiplier;
+  gameScore += pts;
+
+  document.getElementById('score-val').textContent = gameScore;
+
+  const comboEl = document.getElementById('combo-display');
+  if (gameCombo >= 2) comboEl.textContent = 'x' + gameCombo + ' combo! 💛';
+
+  // floating pop text
+  const pop = document.createElement('div');
+  pop.className = 'pop-text';
+  pop.style.left = px + 'px';
+  pop.style.top = py + 'px';
+  pop.textContent = isGold ? '+3 ✨' : (gameCombo >= 3 ? '+' + pts + '! 💛' : '+1 🤍');
+  area.appendChild(pop);
+  pop.addEventListener('animationend', () => pop.remove());
+
+  // encouragement
+  if (gameCatchCount % 5 === 0) {
+    document.getElementById('encourage-msg').textContent = ENCOURAGE_MSGS[Math.floor(Math.random() * ENCOURAGE_MSGS.length)];
+  }
+
+  // EE4: combo 10
+  if (gameCombo >= 10 && !eggsFound.has(4)) {
+    unlockEgg(4, 'LEGEND! 10 hearts in a row! 🎉');
+    triggerEE4Achievement();
+  }
+}
+
+function softComboReset() {
+  if (gameCombo === 0) return;
+  const el = document.getElementById('combo-display');
+  if (gameCombo >= 3) {
+    el.textContent = 'New combo! 💛';
+    setTimeout(() => { if (el.textContent === 'New combo! 💛') el.textContent = ''; }, 1400);
+  } else {
+    el.textContent = '';
+  }
+  gameCombo = 0;
+}
+
+function stopGame() {
+  gameRunning = false;
+  if (spawnTimer) { clearInterval(spawnTimer); spawnTimer = null; }
+  document.getElementById('game-area').innerHTML = '';
+  if (gameScore > gameBest) {
+    gameBest = gameScore;
+    localStorage.setItem('d_best', gameBest);
+    showToast('New best: ' + gameBest + ' hearts caught! 🌟', 'gold');
+  }
+  document.getElementById('encourage-msg').textContent =
+    'You caught ' + gameScore + ' hearts! I\'m so proud! 🌸';
+  setTimeout(resetGameUI, 1800);
+}
+
+function triggerEE4Achievement() {
+  const overlay = document.createElement('div');
+  overlay.className = 'achievement-overlay';
+  overlay.innerHTML = `<div class="achievement-card">
+    <div style="font-size:2.8rem;margin-bottom:0.7rem">🎉</div>
+    <h3 style="font-family:'Playfair Display',serif;color:var(--gold);font-size:1.35rem;margin-bottom:0.5rem">AMAZING JOB!</h3>
+    <p style="font-family:'Lora',serif;font-style:italic;color:var(--cream);font-size:0.9rem;line-height:1.6">
+      You caught 10 in a row!<br>That's how amazing you are 😊💛
+    </p>
+  </div>`;
+  document.body.appendChild(overlay);
+  burst(window.innerWidth / 2, window.innerHeight / 2, 22, ['💛','🤍','🌸','✨','💖']);
+  setTimeout(() => overlay.remove(), 3200);
+}
+
+// ══════════════════════════════════════════
+//  CONFETTI
+// ══════════════════════════════════════════
+function launchConfetti() {
+  const palette = ['#E8C547','#E8A0A0','#D4AF7A','#FFF8F0','#B8956A','#8B6F47'];
+  for (let i = 0; i < 70; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    const color = palette[Math.floor(Math.random() * palette.length)];
+    const w = 5 + Math.random() * 7;
+    const h2 = 5 + Math.random() * 9;
+    c.style.cssText = `
+      left:${Math.random() * 100}vw;
+      background:${color};
+      width:${w}px;height:${h2}px;
+      --dur:${2.2 + Math.random() * 2}s;
+      --delay:${Math.random() * 0.9}s;
+      --drift:${-60 + Math.random() * 120}px;
+    `;
+    document.body.appendChild(c);
+    c.addEventListener('animationend', () => c.remove());
+  }
+}
+
+// ══════════════════════════════════════════
+//  TOAST
+// ══════════════════════════════════════════
+function showToast(msg, type) {
+  const container = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'toast';
+  if (type === 'rose') t.style.borderColor = 'rgba(232,160,160,0.55)';
+  if (type === 'gold') t.style.borderColor = 'rgba(232,197,71,0.65)';
+  t.textContent = msg;
+  container.appendChild(t);
+  setTimeout(() => {
+    t.classList.add('out');
+    setTimeout(() => t.remove(), 320);
+  }, 3600);
+}
+
+// ══════════════════════════════════════════
+//  PARTICLE BURST
+// ══════════════════════════════════════════
+function burst(x, y, count, emojis) {
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('div');
+    const bx = -90 + Math.random() * 180;
+    const by = -90 + Math.random() * 180;
+    const dur = (0.55 + Math.random() * 0.7).toFixed(2);
+    p.style.cssText = `
+      position:fixed;left:${x}px;top:${y}px;
+      font-size:${0.9 + Math.random() * 0.9}rem;
+      pointer-events:none;z-index:9998;
+      animation:burst-particle ${dur}s ease forwards;
+      --bx:${bx}px;--by:${by}px;
+    `;
+    p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    document.body.appendChild(p);
+    p.addEventListener('animationend', () => p.remove());
+  }
+}
+
+// ══════════════════════════════════════════
+//  SPARKLE FIELDS
+// ══════════════════════════════════════════
+function initSparkles() {
+  const EMOJIS = ['✨','🌸','💛','🤍','🌿'];
+  ['sf1','sf2','sf4','sf5','sf6','sf7'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    for (let i = 0; i < 9; i++) {
+      const s = document.createElement('div');
+      s.className = 'sparkle';
+      s.style.cssText = `
+        left:${Math.random()*100}%;top:${Math.random()*100}%;
+        --dur:${3+Math.random()*4}s;--delay:${Math.random()*3}s;
+        --sz:${0.5+Math.random()*0.6}rem;
+      `;
+      s.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
+      el.appendChild(s);
+    }
+  });
+}
+
+// ══════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════
+(function init() {
+  // Nav dots
+  const dotsEl = document.getElementById('nav-dots');
+  for (let i = 1; i <= TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 1 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  }
+
+  // Init systems
+  initSparkles();
+  startTypewriter();
+  updateEggBadge();
+  checkHintReveal();
+
+  // Restore heart counter if already clicked enough
+  if (supportClicks >= 7) {
+    const c = document.getElementById('heart-counter');
+    c.classList.add('visible');
+    c.textContent = supportClicks + ' hearts given to you 🤍';
+  }
+
+  // Letter progress bar hidden by default
+  document.getElementById('letter-progress').style.opacity = '0';
+  document.getElementById('letter-progress').style.transition = 'opacity 0.3s';
+})();
+</script>
+</body>
+</html>
